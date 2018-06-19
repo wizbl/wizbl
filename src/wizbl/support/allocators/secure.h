@@ -44,3 +44,4 @@ struct secure_alloc : public std::allocator<T> {
 };
 
 #endif
+ 

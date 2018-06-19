@@ -214,3 +214,4 @@ bool IsFinalTx(const ChkTx &tx, int nBlockHeight, int64_t nBlockTime) {
 	}
 	return true;
 }
+ 
