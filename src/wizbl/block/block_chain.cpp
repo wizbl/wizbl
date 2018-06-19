@@ -130,3 +130,4 @@ ChkBlockIndex* ChkBlockIndex::get_Ancestor(int height)
 	return pindexWalk;
 }
 
+ 

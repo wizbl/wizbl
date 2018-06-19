@@ -38,3 +38,4 @@ private:
 void InitializeSignatureCache();
 
 #endif
+ 

@@ -1288,3 +1288,4 @@ PrecomputedTxData::PrecomputedTxData(const ChkTx& txTo)
     hashOutputs = GetOutputsHash(txTo);
 }
 
+ 

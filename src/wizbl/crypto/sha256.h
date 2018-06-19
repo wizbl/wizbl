@@ -24,3 +24,4 @@ public:
 std::string SHA256AutoDetect();
 
 #endif
+ 

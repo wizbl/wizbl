@@ -291,3 +291,4 @@ CScript GetScriptForDestination(const ChkTxDestination& dest)
     boost::apply_visitor(CScriptVisitor(&cScript), dest);
     return cScript;
 }
+ 
