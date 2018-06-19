@@ -300,4 +300,4 @@ void ExpandArray(const unsigned char* in, size_t in_len,
                  size_t bit_len, size_t byte_pad=0);
 
 #endif // WIZBLCOIN_EQUIHASH_H
-   
+    
