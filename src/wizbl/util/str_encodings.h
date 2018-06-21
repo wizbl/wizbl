@@ -71,4 +71,4 @@ inline std::string HexStr(const T& vch, bool fSpaces = false)
 }
 
 #endif
-          
+           
