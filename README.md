@@ -16,4 +16,4 @@ Currently, it is 0.0.1 version - only partial packages have uploaded due to urge
 ## Links
 
 * Website: https://wizbl.io
-     
+      
