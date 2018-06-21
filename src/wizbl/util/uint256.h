@@ -123,4 +123,4 @@ inline uint256 uint256S(const char *str)
 }
 
 #endif // WIZBLCOIN_UINT256_H
-           
+            
