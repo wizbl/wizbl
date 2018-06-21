@@ -56,4 +56,4 @@ enum txnouttype
 };
 
 #endif
-          
+           
