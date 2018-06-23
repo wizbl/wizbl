@@ -726,4 +726,4 @@ void printfln(const char* fmt, TINY_FORMAT_VARARGS(n))                     \
 #define strprintf tfm::format
 
 #endif // TINY_FORMAT_H_INCLUDED
-                          
+                           
