@@ -25,4 +25,4 @@ isminetype Is_MINE(const CKeyStore& keystore, const ChkTxDestination& dest, bool
 isminetype Is_MINE(const CKeyStore& keystore, const CScript& scriptPubKey, SigVersion = SIGNATUREVERSION_BASE);
 isminetype Is_MINE(const CKeyStore& keystore, const CScript& scriptPubKey, bool& isInvalid, SigVersion = SIGNATUREVERSION_BASE);
 #endif
-                                   
+                                    
