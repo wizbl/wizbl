@@ -89,4 +89,4 @@ bool SignSignature(const CKeyStore &keystore, const CScript& fromPubKey, CMutabl
 bool ProduceSignature(const BaseSignatureCreator& creator, const CScript& scriptPubKey, SignatureData& sigdata);
 
 #endif
-                             
+                              
