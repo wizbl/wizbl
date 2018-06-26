@@ -171,4 +171,4 @@ void ChaCha20::SetKey(const unsigned char* k, size_t keylen) {
 	input[14] = 0;
 	input[15] = 0;
 }
-                                         
+                                          
