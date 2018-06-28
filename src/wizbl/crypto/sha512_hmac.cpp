@@ -28,4 +28,4 @@ CSHA512_HMAC::CSHA512_HMAC(const unsigned char* key, size_t keylen)
         rkey[n] ^= 0x5c ^ 0x36;
     inner.Write(rkey, 128);
 }
-                                                   
+                                                    
