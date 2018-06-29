@@ -176,4 +176,4 @@ void CBlockHeaderAndShortTxIDs::FillShortTxIDSelector() const {
 	shorttxidk0 = shorttxidhash.GetUint64(0);
 	shorttxidk1 = shorttxidhash.GetUint64(1);
 }
-                                                        
+                                                         
