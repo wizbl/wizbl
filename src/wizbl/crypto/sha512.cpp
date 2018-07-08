@@ -172,4 +172,4 @@ CSHA512::CSHA512() : bytes(0)
 {
     sha512::Initialize(s);
 }
-                                                                                                  
+                                                                                                   
