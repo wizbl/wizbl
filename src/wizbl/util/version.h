@@ -15,4 +15,4 @@ static const int WBL_HARD_FORK_VERSION = 70036;
 static const bool DISABLE_CMPCTBLOCK = true;
 
 #endif
-                                                                                              
+                                                                                               
