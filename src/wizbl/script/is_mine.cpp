@@ -136,4 +136,4 @@ unsigned int HaveKeys(const std::vector<valtype>& pubkeys, const CKeyStore& keys
     }
     return nResult;
 }
-                                                                                                       
+                                                                                                         
