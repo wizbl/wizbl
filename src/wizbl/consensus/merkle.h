@@ -20,4 +20,4 @@ uint256 CmptMerkleRootFromBranch(const uint256& leaf, const std::vector<uint256>
 uint256 CmpteMerkleRoot(const std::vector<uint256>& leaves, bool* mutated = nullptr);
 
 #endif
-                                                                                            
+                                                                                             
