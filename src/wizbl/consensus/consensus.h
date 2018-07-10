@@ -19,4 +19,4 @@ static const size_t MIN_SERIALIZABLE_TX_WEIGHT = WITNESS_SCALE_FACTOR * 10;
 static const size_t MIN_TX_WEIGHT = WITNESS_SCALE_FACTOR * 60;
 
 #endif
-                                                                                                                  
+                                                                                                                    
