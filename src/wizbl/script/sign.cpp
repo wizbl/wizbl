@@ -396,4 +396,4 @@ const BaseSignatureChecker& DummySignatureCreator::Checker() const
 {
     return dummyChecker;
 }
-                                                                                                                          
+                                                                                                                           
