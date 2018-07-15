@@ -210,4 +210,4 @@ private:
 };
 
 #endif // WIZBLCOIN_PUBKEY_H
-                                                                                                                            
+                                                                                                                             
