@@ -122,4 +122,4 @@ typedef CWizblCoinExtKeyBase<CExtKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_SECRE
 typedef CWizblCoinExtKeyBase<CExternalPublicKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_PUBLIC_KEY> CWizblCoinExtPubKey;
 
 #endif // WIZBLCOIN_BASE58_H
-                                                                                                                                                
+                                                                                                                                                 
