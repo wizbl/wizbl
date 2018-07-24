@@ -120,4 +120,4 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot
     if (pmutated) *pmutated = mutated;
     if (proot) *proot = h;
 }
-                                                                                                                                           
+                                                                                                                                            
