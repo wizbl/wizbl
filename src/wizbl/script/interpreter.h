@@ -121,4 +121,4 @@ private:
 size_t CountWitnessSigOps(const CScript& scriptSig, const CScript& scriptPubKey, const CScriptWitnesses* witness, unsigned int flags);
 bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, const CScriptWitnesses* witness, unsigned int flags, const BaseSignatureChecker& checker, ScriptError* serror = nullptr);
 #endif
-                                                                                                                                                 
+                                                                                                                                                  
