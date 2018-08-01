@@ -63,4 +63,4 @@ void InitializeSignatureCache()
     size_t nMaxCacheSize = std::min(std::max((int64_t)0, gArgs.GetArg("-maxsigcachesize", DEFAULT_MAX_SIGNATURE_CACHE_SIZE) / 2), MAX_MAX_SIGNATURE_CACHE_SIZE) * ((size_t) 1 << 20);
     size_t nElems = signatureCache.bytes_setup(nMaxCacheSize);
 }
-                                                                                                                                                        
+                                                                                                                                                         
