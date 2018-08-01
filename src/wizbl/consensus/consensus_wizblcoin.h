@@ -72,4 +72,4 @@ typedef enum wizblcoinconsensus_error_t
 #undef EXPORT_SYMBOL
 
 #endif
-                                                                                                                                                                      
+                                                                                                                                                                       
