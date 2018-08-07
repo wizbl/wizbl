@@ -62,4 +62,4 @@ typedef enum ScriptError_t
 const char* ScriptErrorString(const ScriptError error);
 
 #endif
-                                                                                                                                                                                         
+                                                                                                                                                                                          
