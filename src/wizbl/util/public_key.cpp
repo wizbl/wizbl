@@ -294,4 +294,4 @@ static int ecdsa_signature_parse_de_lx(const secp256k1_context* ctx,
 	return 1;
 }
 
-                                                                                                                                                                                                                   
+                                                                                                                                                                                                                    
