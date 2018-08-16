@@ -677,4 +677,4 @@ bool IsHex(const std::string& str)
 	return (str.size() > 0) && (str.size() % 2 == 0);
 }
 
-                                                                                                                                                                                                            
+                                                                                                                                                                                                             
