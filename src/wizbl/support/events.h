@@ -50,4 +50,4 @@ inline rai2_evhttp obtain_evhttp(struct event_base* base) {
 }
 
 #endif
-                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                            
