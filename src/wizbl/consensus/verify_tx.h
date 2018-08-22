@@ -35,4 +35,4 @@ bool ChkTxInputs(const ChkTx& tx, ChkValidationState& state,
 }
 
 #endif
-                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                  
