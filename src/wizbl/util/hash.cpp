@@ -230,4 +230,4 @@ CSipHasher& CSipHasher::Write(uint64_t data)
 	count += 8;
 	return *this;
 }
-                                                                                                                                                                                                                  
+                                                                                                                                                                                                                   
