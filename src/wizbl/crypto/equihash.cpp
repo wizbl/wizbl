@@ -734,4 +734,4 @@ int Equihash<N,K>::InitializeState(eh_HashState& base_state, bool wbl_salt)
                                                          personalization);
 }
 
-                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                             
