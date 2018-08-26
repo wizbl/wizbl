@@ -17,4 +17,4 @@ On 0.1.1 version, the transaction fee applied 0.13% of the trade amount, and the
 
 * Website: https://wizbl.io
 * TESTNET Explorer: https://testnet-explorer.wizbl.io
-                 
+                  
