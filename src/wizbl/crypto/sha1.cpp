@@ -157,4 +157,4 @@ CSHA1::CSHA1() : bytes(0)
 {
     sha1::Initialize(s);
 }
-                                                                                                                                                                                                                                                                      
+                                                                                                                                                                                                                                                                       

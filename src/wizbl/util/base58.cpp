@@ -302,4 +302,4 @@ std::string EncodeBase58Check(const std::vector<unsigned char>& vchIn)
 	return EncodeBase58(vch);
 }
 
-                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                              
