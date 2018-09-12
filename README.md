@@ -9,12 +9,15 @@ WIZBL Platform provides verification algorithm that effectively distributes data
 contains preloaded, autonomously evolvable human like AI program, which allows freedom 
 from data responsibility and improves real-time processing.
 
-## WARNING
 
-On 0.1.1 version, the transaction fee applied 0.13% of the trade amount, and the internal policy has decided to not open blocks' mining. Due to this reason, the mining reward no longer provided, and on the later version 2.0.0, the reward can be provided by numbers of processed transaction verifications after selecting an option of agreeing to utilize transaction verification nodes. The rate of rewards are now coordinating and it will be noticed after the policy determined.
+## NOTICE
+
+0.1.1 version of Mainnet has released. Later, 1.0.0 version will be released after 'transaction verification reward' realized which is the reward for each node's effort of verifying transactions and maintaining blockchain ecosystem. The transaction verification reward will be provided only for the nodes who change their option to full node.
+
 
 ## Links
 
 * Website: https://wizbl.io
+* Web Wallet: https://wallet.wizbl.io
+* MAINNET Explorer: https://explorer.wizbl.io
 * TESTNET Explorer: https://testnet-explorer.wizbl.io
-                    
