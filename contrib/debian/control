@@ -27,8 +27,8 @@ Build-Depends: debhelper,
  libzmq3-dev
 Standards-Version: 3.9.2
 Homepage: https://wizblcoincore.org/
-Vcs-Git: git://github.com/wizblcoin/wizblcoin.git
-Vcs-Browser: https://github.com/wizblcoin/wizblcoin
+Vcs-Git: git://github.com/wizbl/wizbl.git
+Vcs-Browser: https://github.com/wizbl/wizbl
 
 Package: wizblcoind
 Architecture: any

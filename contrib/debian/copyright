@@ -2,7 +2,7 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Wizblcoin Core
 Upstream-Contact: Satoshi Nakamoto <satoshin@gmx.com>
  irc://#wizblcoin@freenode.net
-Source: https://github.com/WIZBLCOIN/WIZBLCOIN
+Source: https://github.com/wizbl/wizbl
 
 Files: *
 Copyright: 2009-2017, Wizblcoin Core Developers, 2017-2018 Wizblcoin Core Developers
