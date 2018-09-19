@@ -6,7 +6,7 @@ This is a minor bug fix for 0.15.0.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/wizblcoin/wizblcoin/issues>
+  <https://github.com/wizbl/wizbl/issues>
 
 To receive security and update notifications, please subscribe to:
 

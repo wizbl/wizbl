@@ -85,7 +85,7 @@ BerkeleyDB is required for the wallet.
 You can add the repository and install using the following commands:
 
     sudo apt-get install software-properties-common
-    sudo add-apt-repository ppa:wizblcoin/wizblcoin
+    sudo add-apt-repository ppa:wizbl/wizbl
     sudo apt-get update
     sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
@@ -293,7 +293,7 @@ Setup and Build Example: Arch Linux
 This example lists the steps necessary to setup and build a command line only, non-wallet distribution of the latest changes on Arch Linux:
 
     pacman -S git base-devel boost libevent python
-    git clone https://github.com/wizblcoin/wizblcoin.git
+    git clone https://github.com/wizbl/wizbl.git
     cd wizblcoin/
     ./autogen.sh
     ./configure --disable-wallet --without-gui --without-miniupnpc

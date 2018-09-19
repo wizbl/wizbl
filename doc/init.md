@@ -54,7 +54,7 @@ see `contrib/debian/examples/wizblcoin.conf`.
 All three configurations assume several paths that might need to be adjusted.
 
 Binary:              `/usr/bin/wizblcoind`  
-Configuration file:  `/etc/wizblcoin/wizblcoin.conf`  
+Configuration file:  `/etc/wizbl/wizbl.conf`  
 Data directory:      `/var/lib/wizblcoind`  
 PID file:            `/var/run/wizblcoind/wizblcoind.pid` (OpenRC and Upstart) or `/var/lib/wizblcoind/wizblcoind.pid` (systemd)  
 Lock file:           `/var/lock/subsys/wizblcoind` (CentOS)  
@@ -68,7 +68,7 @@ can then be controlled by group membership.
 3b) Mac OS X
 
 Binary:              `/usr/local/bin/wizblcoind`  
-Configuration file:  `~/Library/Application Support/Wizblcoin/wizblcoin.conf`  
+Configuration file:  `~/Library/Application Support/wizbl/wizbl.conf`  
 Data directory:      `~/Library/Application Support/Wizblcoin`
 Lock file:           `~/Library/Application Support/Wizblcoin/.lock`
 

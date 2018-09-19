@@ -24,18 +24,18 @@ URL:		https://wizblcoin.org/
 Source0:	https://wizblcoin.org/bin/wizblcoin-core-%{version}/wizblcoin-%{version}.tar.gz
 Source1:	http://download.oracle.com/berkeley-db/db-%{bdbv}.NC.tar.gz
 
-Source10:	https://raw.githubusercontent.com/WIZBLCOIN/WIZBLCOIN/master/contrib/debian/examples/wizblcoincore.conf
+Source10:	https://raw.githubusercontent.com/wizbl/wizbl/master/contrib/debian/examples/wizblcoincore.conf
 
 #man pages
-Source20:	https://raw.githubusercontent.com/wizblcoin/wizblcoin/v%{version}/doc/man/wizblcoind.1
-Source21:	https://raw.githubusercontent.com/wizblcoin/wizblcoin/v%{version}/doc/man/wizblcoin-cli.1
-Source22:	https://raw.githubusercontent.com/wizblcoin/wizblcoin/v%{version}/doc/man/wizblcoin-qt.1
+Source20:	https://raw.githubusercontent.com/wizbl/wizbl/v%{version}/doc/man/wizblcoind.1
+Source21:	https://raw.githubusercontent.com/wizbl/wizbl/v%{version}/doc/man/wizblcoin-cli.1
+Source22:	https://raw.githubusercontent.com/wizbl/wizbl/v%{version}/doc/man/wizblcoin-qt.1
 
 #selinux
-Source30:	https://raw.githubusercontent.com/wizblcoin/wizblcoin/v%{version}/contrib/rpm/wizblcoin.te
+Source30:	https://raw.githubusercontent.com/wizbl/wizbl/v%{version}/contrib/rpm/wizblcoin.te
 # Source31 - what about wizblcoin-tx and bench_wizblcoin ???
-Source31:	https://raw.githubusercontent.com/wizblcoin/wizblcoin/v%{version}/contrib/rpm/wizblcoin.fc
-Source32:	https://raw.githubusercontent.com/wizblcoin/wizblcoin/v%{version}/contrib/rpm/wizblcoin.if
+Source31:	https://raw.githubusercontent.com/wizbl/wizbl/v%{version}/contrib/rpm/wizblcoin.fc
+Source32:	https://raw.githubusercontent.com/wizbl/wizbl/v%{version}/contrib/rpm/wizblcoin.if
 
 Source100:	https://upload.wikimedia.org/wikipedia/commons/4/46/Wizblcoin.svg
 
@@ -200,7 +200,7 @@ OPTIONS=""
 
 # System service defaults.
 # Don't change these unless you know what you're doing.
-CONFIG_FILE="%{_sysconfdir}/wizblcoin/wizblcoincore.conf"
+CONFIG_FILE="%{_sysconfdir}/wizbl/wizblcore.conf"
 DATA_DIR="%{_localstatedir}/lib/wizblcoin"
 PID_FILE="/run/wizblcoind/wizblcoind.pid"
 EOF

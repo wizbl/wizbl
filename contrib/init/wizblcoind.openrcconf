@@ -1,7 +1,7 @@
 # /etc/conf.d/wizblcoind: config file for /etc/init.d/wizblcoind
 
 # Config file location
-#WIZBLCOIND_CONFIGFILE="/etc/wizblcoin/wizblcoincore.conf"
+#WIZBLCOIND_CONFIGFILE="/etc/wizbl/wizblcore.conf"
 
 # What directory to write pidfile to?  (created and owned by $WIZBLCOIND_USER)
 #WIZBLCOIND_PIDDIR="/var/run/wizblcoind"
