@@ -7,7 +7,7 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/wizbl/wizblcore-detached-sigs.git"
+- "url": "https://github.com/WIZBLCOIN/wizblcoincore-detached-sigs.git"
   "dir": "signature"
 files:
 - "wizblcoin-core-osx-unsigned.tar.gz"

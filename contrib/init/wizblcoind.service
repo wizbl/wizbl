@@ -9,7 +9,7 @@ Group=wizblcoin
 Type=forking
 PIDFile=/var/lib/wizblcoind/wizblcoind.pid
 ExecStart=/usr/bin/wizblcoind -daemon -pid=/var/lib/wizblcoind/wizblcoind.pid \
--conf=/etc/wizbl/wizblcore.conf -datadir=/var/lib/wizblcoind -disablewallet
+-conf=/etc/wizblcoin/wizblcoincore.conf -datadir=/var/lib/wizblcoind -disablewallet
 
 Restart=always
 PrivateTmp=true

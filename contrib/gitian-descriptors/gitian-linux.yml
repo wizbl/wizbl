@@ -28,7 +28,7 @@ packages:
 - "ca-certificates"
 - "python"
 remotes:
-- "url": "https://github.com/wizbl/wizbl.git"
+- "url": "https://github.com/WIZBLCOIN/WIZBLCOIN.git"
   "dir": "WIZBLCOIN"
 files: []
 script: |
