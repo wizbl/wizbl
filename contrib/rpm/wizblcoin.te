@@ -1,0 +1,81 @@
+policy_module(wizblcoin, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type wizblcoin_t;
+type wizblcoin_exec_t;
+init_daemon_domain(wizblcoin_t, wizblcoin_exec_t)
+
+permissive wizblcoin_t;
+
+type wizblcoin_initrc_exec_t;
+init_script_file(wizblcoin_initrc_exec_t)
+
+type wizblcoin_conf_t;
+files_type(wizblcoin_conf_t)
+
+type wizblcoin_var_lib_t;
+files_type(wizblcoin_var_lib_t)
+
+type wizblcoin_var_run_t;
+files_type(wizblcoin_var_run_t)
+
+type wizblcoin_port_t;
+corenet_port(wizblcoin_port_t)
+
+########################################
+#
+# wizblcoin local policy
+#
+allow wizblcoin_t self:process { fork };
+
+allow wizblcoin_t self:fifo_file rw_fifo_file_perms;
+allow wizblcoin_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(wizblcoin_t, wizblcoin_conf_t, wizblcoin_conf_t)
+manage_files_pattern(wizblcoin_t, wizblcoin_conf_t, wizblcoin_conf_t)
+
+manage_dirs_pattern(wizblcoin_t, wizblcoin_var_lib_t, wizblcoin_var_lib_t)
+manage_files_pattern(wizblcoin_t, wizblcoin_var_lib_t, wizblcoin_var_lib_t)
+files_var_lib_filetrans(wizblcoin_t, wizblcoin_var_lib_t, { dir file })
+
+manage_dirs_pattern(wizblcoin_t, wizblcoin_var_run_t, wizblcoin_var_run_t)
+manage_files_pattern(wizblcoin_t, wizblcoin_var_run_t, wizblcoin_var_run_t)
+
+sysnet_dns_name_resolve(wizblcoin_t)
+corenet_all_recvfrom_unlabeled(wizblcoin_t)
+
+allow wizblcoin_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(wizblcoin_t)
+corenet_tcp_sendrecv_generic_node(wizblcoin_t)
+corenet_tcp_sendrecv_all_ports(wizblcoin_t)
+corenet_tcp_bind_generic_node(wizblcoin_t)
+
+gen_require(`
+    type wizblcoin_port_t;
+')
+allow wizblcoin_t wizblcoin_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type wizblcoin_port_t;
+')
+allow wizblcoin_t wizblcoin_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(wizblcoin_t)
+
+files_read_etc_files(wizblcoin_t)
+
+miscfiles_read_localization(wizblcoin_t)
+
+sysnet_dns_name_resolve(wizblcoin_t)
+
+allow wizblcoin_t wizblcoin_exec_t:file execute_no_trans;
+allow wizblcoin_t self:process setsched;
+corecmd_exec_ls(wizblcoin_t)
+corenet_tcp_connect_http_port(wizblcoin_t)
+dev_read_urand(wizblcoin_t)
+fs_getattr_xattr_fs(wizblcoin_t)
+kernel_read_system_state(wizblcoin_t)

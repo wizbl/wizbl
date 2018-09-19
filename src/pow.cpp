@@ -1,0 +1,292 @@
+// Copyright (c) 2009-2010 Satoshi Nakamoto
+// Copyright (c) 2009-2016 The Wizblcoin Core developers
+// Copyright (c) 2016-2017 The Zcash developers
+// Copyright (c) 2018 The Wizblcoin Private developers
+// Copyright (c) 2017-2018 The Wizblcoin Core developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+#include "pow.h"
+
+#include "arith_uint256.h"
+#include "chain.h"
+#include "chainparams.h"
+#include "crypto/equihash.h"
+#include "primitives/block.h"
+#include "streams.h"
+#include "uint256.h"
+#include "util.h"
+
+#include <algorithm>
+#include <iostream>
+
+//unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock,
+//                                 const Consensus::Params& params)
+//{
+//    assert(pindexLast != nullptr);
+//    return UintToArith256(params.PowLimit(false)).GetCompact();
+//    //int nHeight = pindexLast->nHeight + 1;
+//    //bool postfork = 0/*nHeight >= params.WBLHeight*/;
+//    //
+//    //if (postfork == false) {
+//    //    // Original Wizblcoin PoW.
+//    //    return WizblcoinGetNextWorkRequired(pindexLast, pblock, params);
+//    //}
+//    //else if (nHeight < params.WBLHeight + params.WBLPremineWindow) {
+//    //    // PoW limit for premine period.
+//    //    unsigned int nProofOfWorkLimit = UintToArith256(params.PowLimit(true)).GetCompact();
+//    //    return nProofOfWorkLimit;
+//    //}
+//    //else if (nHeight < params.WBLHeight + params.WBLPremineWindow + params.nDigishieldAveragingWindow) {
+//    //    // Pow limit start for warm-up period.
+//    //    return UintToArith256(params.powLimitStart).GetCompact();
+//    //}
+//    //else if (nHeight < params.WBLZawyLWMAHeight) {
+//    //    // Regular Digishield v3.
+//    //    return DigishieldGetNextWorkRequired(pindexLast, pblock, params);
+//    //} else {
+//    //    // Zawy's LWMA.
+//    //    return LwmaGetNextWorkRequired(pindexLast, pblock, params);
+//    //}
+//}
+
+//unsigned int LwmaGetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
+//{
+//    // Special difficulty rule for testnet:
+//    // If the new block's timestamp is more than 2 * 10 minutes
+//    // then allow mining of a min-difficulty block.
+//    if (params.fPowAllowMinDifficultyBlocks &&
+//        pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2) {
+//        return UintToArith256(params.PowLimit(true)).GetCompact();
+//    }
+//    return LwmaCalculateNextWorkRequired(pindexLast, params);
+//}
+
+//unsigned int LwmaCalculateNextWorkRequired(const CBlockIndex* pindexLast, const Consensus::Params& params)
+//{
+//    if (params.fPowNoRetargeting) {
+//        return pindexLast->nBits;
+//    }
+//
+//    const int N = params.nZawyLwmaAveragingWindow;
+//    const int k = params.nZawyLwmaAjustedWeight;
+//    const int height = pindexLast->nHeight + 1;
+//    assert(height > N);
+//
+//    arith_uint256 sum_target;
+//    int t = 0, j = 0;
+//
+//    // Loop through N most recent blocks.
+//    for (int i = height - N; i < height; i++) {
+//        const CBlockIndex* block = pindexLast->GetAncestor(i);
+//        const CBlockIndex* block_Prev = block->GetAncestor(i - 1);
+//        int64_t solvetime = block->GetBlockTime() - block_Prev->GetBlockTime();
+//
+//        j++;
+//        t += solvetime * j;  // Weighted solvetime sum.
+//
+//        // Target sum divided by a factor, (k N^2).
+//        // The factor is a part of the final equation. However we divide sum_target here to avoid
+//        // potential overflow.
+//        arith_uint256 target;
+//        target.SetCompact(block->nBits);
+//        sum_target += target / (k * N * N);
+//    }
+//    // Keep t reasonable in case strange solvetimes occurred.
+//    if (t < N * k / 3) {
+//        t = N * k / 3;
+//    }
+//
+//    const arith_uint256 pow_limit = UintToArith256(params.PowLimit(true));
+//    arith_uint256 next_target = t * sum_target;
+//    if (next_target > pow_limit) {
+//        next_target = pow_limit;
+//    }
+//
+//    return next_target.GetCompact();
+//}
+
+//unsigned int DigishieldGetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock,
+//                                           const Consensus::Params& params)
+//{
+//    assert(pindexLast != nullptr);
+//    unsigned int nProofOfWorkLimit = UintToArith256(params.PowLimit(true)).GetCompact();  // Always postfork.
+//
+//    const CBlockIndex* pindexFirst = pindexLast;
+//    arith_uint256 bnTot {0};
+//    for (int i = 0; pindexFirst && i < params.nDigishieldAveragingWindow; i++) {
+//        arith_uint256 bnTmp;
+//        bnTmp.SetCompact(pindexFirst->nBits);
+//        bnTot += bnTmp;
+//        pindexFirst = pindexFirst->pprev;
+//    }
+//    
+//    if (pindexFirst == NULL)
+//        return nProofOfWorkLimit;
+//    
+//    arith_uint256 bnAvg {bnTot / params.nDigishieldAveragingWindow};
+//    return DigishieldCalculateNextWorkRequired(bnAvg, pindexLast, pindexFirst, params);
+//}
+
+//unsigned int DigishieldCalculateNextWorkRequired(arith_uint256 bnAvg, const CBlockIndex* pindexLast, const CBlockIndex* pindexFirst, const Consensus::Params& params)
+//{
+//    if (params.fPowNoRetargeting)
+//        return pindexLast->nBits;
+//    
+//    int64_t nLastBlockTime = pindexLast->GetMedianTimePast();
+//    int64_t nFirstBlockTime = pindexFirst->GetMedianTimePast();
+//    // Limit adjustment
+//    int64_t nActualTimespan = nLastBlockTime - nFirstBlockTime;
+//    
+//    if (nActualTimespan < params.DigishieldMinActualTimespan())
+//        nActualTimespan = params.DigishieldMinActualTimespan();
+//    if (nActualTimespan > params.DigishieldMaxActualTimespan())
+//        nActualTimespan = params.DigishieldMaxActualTimespan();
+//
+//    // Retarget
+//    const arith_uint256 bnPowLimit = UintToArith256(params.PowLimit(true));
+//    arith_uint256 bnNew {bnAvg};
+//    bnNew /= params.DigishieldAveragingWindowTimespan();
+//    bnNew *= nActualTimespan;
+//    
+//    if (bnNew > bnPowLimit)
+//        bnNew = bnPowLimit;
+//
+//    return bnNew.GetCompact();
+//}
+
+//unsigned int WizblcoinGetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
+//{
+//    assert(pindexLast != nullptr);
+//    return UintToArith256(params.PowLimit(false)).GetCompact();
+//    //unsigned int nProofOfWorkLimit = UintToArith256(params.PowLimit(false)).GetCompact();
+//    //
+//    //// Only change once per difficulty adjustment interval
+//    //if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
+//    //{
+//    //    if (params.fPowAllowMinDifficultyBlocks)
+//    //    {
+//    //        // Special difficulty rule for testnet:
+//    //        // If the new block's timestamp is more than 2* 10 minutes
+//    //        // then allow mining of a min-difficulty block.
+//    //        if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing*2)
+//    //            return nProofOfWorkLimit;
+//    //        else
+//    //        {
+//    //            // Return the last non-special-min-difficulty-rules-block
+//    //            const CBlockIndex* pindex = pindexLast;
+//    //            while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nBits == nProofOfWorkLimit)
+//    //                pindex = pindex->pprev;
+//    //            return pindex->nBits;
+//    //        }
+//    //    }
+//    //    return pindexLast->nBits;
+//    //}
+//    //
+//    //// Go back by what we want to be 14 days worth of blocks
+//    //int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval()-1);
+//    //assert(nHeightFirst >= 0);
+//    //const CBlockIndex* pindexFirst = pindexLast->GetAncestor(nHeightFirst);
+//    //assert(pindexFirst);
+//    //
+//    //return WizblcoinCalculateNextWorkRequired(pindexLast, pindexFirst->GetBlockTime(), params);
+//}
+
+//unsigned int WizblcoinCalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
+//{
+//    return UintToArith256(params.PowLimit(false)).GetCompact();
+//    //if (params.fPowNoRetargeting)
+//    //    return pindexLast->nBits;
+//    //
+//    //// Limit adjustment step
+//    //int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
+//    //if (nActualTimespan < params.nPowTargetTimespanLegacy/4)
+//    //    nActualTimespan = params.nPowTargetTimespanLegacy/4;
+//    //if (nActualTimespan > params.nPowTargetTimespanLegacy*4)
+//    //    nActualTimespan = params.nPowTargetTimespanLegacy*4;
+//    //
+//    //// Retarget
+//    //const arith_uint256 bnPowLimit = UintToArith256(params.PowLimit(false));
+//    //arith_uint256 bnNew;
+//    //bnNew.SetCompact(pindexLast->nBits);
+//    //bnNew *= nActualTimespan;
+//    //bnNew /= params.nPowTargetTimespanLegacy;
+//    //
+//    //if (bnNew > bnPowLimit)
+//    //    bnNew = bnPowLimit;
+//    //
+//    //return bnNew.GetCompact();
+//}
+
+//bool CheckEquihashSolution(const CBlockHeader *pblock, const CChainParams& params)
+//{
+//    int height = pblock->nHeight;
+//    unsigned int n = params.EquihashN(height);
+//    unsigned int k = params.EquihashK(height);
+//
+//    // Hash state
+//    crypto_generichash_blake2b_state state;
+//    EhInitialiseState(n, k, state, params.EquihashUseWBLSalt(height));
+//
+//    // I = the block header minus nonce and solution.
+//    CEquihashInput I{*pblock};
+//    // I||V
+//    CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
+//    ss << I;
+//    ss << pblock->nNonce;
+//
+//    // H(I||V||...
+//    crypto_generichash_blake2b_update(&state, (unsigned char*)&ss[0], ss.size());
+//
+//    bool isValid;
+//    EhIsValidSolution(n, k, state, pblock->nSolution, isValid);
+//    if (!isValid)
+//        return error("CheckEquihashSolution(): invalid solution");
+//
+//    return true;
+//}
+
+
+//블럭 생성 옵션
+enum class eBlockGenerationOption
+{
+	POW, // 블럭 생성 난이도 체크 O
+	WBL, // 블럭 생성 난이도 체크 X
+};
+#define BLOCK_GENERATION_OPTION eBlockGenerationOption::WBL
+
+//bool CheckProofOfWork(uint256 hash, unsigned int nBits, bool postfork, const Consensus::Params& params)
+//{
+//	LogPrintfd("hash => %s", hash.GetHex());
+//	LogPrintfd("nBits => %x", nBits);
+//	LogPrintfd("postfork => %d", postfork);
+//
+//	switch (BLOCK_GENERATION_OPTION)
+//	{
+//	case eBlockGenerationOption::POW:
+//	{
+//		bool fNegative;
+//		bool fOverflow;
+//		arith_uint256 bnTarget;
+//
+//		bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
+//		LogPrintfd("bnTarget => %s", bnTarget.GetHex());
+//		LogPrintfd("fNegative => %d, fOverflow = %d", fNegative, fOverflow);
+//		// Check range
+//		if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.PowLimit(postfork)))
+//			return false;
+//
+//		LogPrintfd("bnTarget => %s", bnTarget.GetHex());
+//		// Check proof of work matches claimed amount
+//		if (UintToArith256(hash) > bnTarget)
+//			return false;
+//	}
+//	break;
+//	case eBlockGenerationOption::WBL:
+//		if (UintToArith256(hash) == 0)
+//			return false;
+//		break;
+//	}
+//	LogPrintfd("");
+//	return true;
+//}

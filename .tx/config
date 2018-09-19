@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[wizblcoin.qt-translation-014x]
+file_filter = src/qt/locale/wizblcoin_<lang>.ts
+source_file = src/qt/locale/wizblcoin_en.ts
+source_lang = en

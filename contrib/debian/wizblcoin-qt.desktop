@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Wizblcoin Core
+Comment=Connect to the Wizblcoin Core P2P Network
+Comment[de]=Verbinde mit dem Wizblcoin peer-to-peer Netzwerk
+Comment[fr]=Wizblcoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Wizblcoin, eşten eşe kriptografik sanal para birimi
+Exec=wizblcoin-qt %u
+Terminal=false
+Type=Application
+Icon=wizblcoin128
+MimeType=x-scheme-handler/wizblcoincore;
+Categories=Office;Finance;

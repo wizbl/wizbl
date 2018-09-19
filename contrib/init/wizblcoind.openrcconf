@@ -1,0 +1,33 @@
+# /etc/conf.d/wizblcoind: config file for /etc/init.d/wizblcoind
+
+# Config file location
+#WIZBLCOIND_CONFIGFILE="/etc/wizblcoin/wizblcoincore.conf"
+
+# What directory to write pidfile to?  (created and owned by $WIZBLCOIND_USER)
+#WIZBLCOIND_PIDDIR="/var/run/wizblcoind"
+
+# What filename to give the pidfile
+#WIZBLCOIND_PIDFILE="${WIZBLCOIND_PIDDIR}/wizblcoind.pid"
+
+# Where to write wizblcoind data (be mindful that the blockchain is large)
+#WIZBLCOIND_DATADIR="/var/lib/wizblcoind"
+
+# User and group to own wizblcoind process
+#WIZBLCOIND_USER="wizblcoin"
+#WIZBLCOIND_GROUP="wizblcoin"
+
+# Path to wizblcoind executable
+#WIZBLCOIND_BIN="/usr/bin/wizblcoind"
+
+# Nice value to run wizblcoind under
+#WIZBLCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#WIZBLCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for wizblcoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+WIZBLCOIND_SIGTERM_TIMEOUT=60

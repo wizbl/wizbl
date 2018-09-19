@@ -1,0 +1,6 @@
+usr/local/bin/wizblcoin-qt usr/bin
+share/pixmaps/wizblcoin32.xpm usr/share/pixmaps
+share/pixmaps/wizblcoin16.xpm usr/share/pixmaps
+share/pixmaps/wizblcoin128.png usr/share/pixmaps
+debian/wizblcoin-qt.desktop usr/share/applications
+debian/wizblcoin-qt.protocol usr/share/kde4/services/
