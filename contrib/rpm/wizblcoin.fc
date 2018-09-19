@@ -1,6 +1,6 @@
 /usr/bin/wizblcoin-cli		--	gen_context(system_u:object_r:wizblcoin_exec_t,s0)
 /usr/sbin/wizblcoind		--	gen_context(system_u:object_r:wizblcoin_exec_t,s0)
-/usr/lib(64)?/wizbl/wizblcoind		--	gen_context(system_u:object_r:wizblcoin_exec_t,s0)
+/usr/lib(64)?/wizbl/wizbld		--	gen_context(system_u:object_r:wizblcoin_exec_t,s0)
 
 /etc/wizblcoin(/.*)?		gen_context(system_u:object_r:wizblcoin_conf_t,s0)
 /var/lib/wizblcoin(/.*)?		gen_context(system_u:object_r:wizblcoin_var_lib_t,s0)
