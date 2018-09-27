@@ -17,7 +17,7 @@ from data responsibility and improves real-time processing.
 
 ## Links
 
-* Website: https://wizbl.io
+* White paper: [English](https://wizbl.io/pdf/WIZBL_WHITEPAPER.pdf)
 * Web Wallet: https://wallet.wizbl.io
 * MAINNET Explorer: https://explorer.wizbl.io
 * TESTNET Explorer: https://testnet-explorer.wizbl.io
