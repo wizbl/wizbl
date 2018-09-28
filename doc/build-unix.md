@@ -1,6 +1,6 @@
-UNIX BUILD NOTES
-====================
-Some notes on how to build Wizblcoin Core in Unix.
+UNIX(Linux) BUILD NOTES
+=======================
+Some notes on how to build Wizblcoin Core in Unix(Linux).
 
 (for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
 
@@ -13,6 +13,55 @@ for example, when specifying the path of the dependency:
 
 Here BDB_PREFIX must be an absolute path - it is defined using $(pwd) which ensures
 the usage of the absolute path.
+
+Build Procedure
+---------------
+The procedure of wizblcoincore build has tested and written based in Ubuntu 18.04.
+In the other versions than Ubuntu 18.04 might cause an error in the process of build.
+wizblcoincore recommend to process the work of build in Ubuntu 18.04.
+If you want to check or modify detail options of required library, please refer the items below the Build Procedure.
+default install root path is $HOME
+
+1. Install Libraries
+
+    ```bash
+    sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libsodium-dev
+    sudo apt-get install git
+    sudo apt-get install libboost-all-dev
+    sudo apt-get install software-properties-common
+    sudo add-apt-repository ppa:bitcoin/bitcoin
+    sudo apt-get update
+    sudo apt-get install libdb4.8-dev libdb4.8++-dev
+    sudo apt-get install libminiupnpc-dev
+    sudo apt-get install libzmq3-dev
+    ```
+
+2. Install Berkeley DB
+    ```bash
+    wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
+    tar -xzvf db-4.8.30.NC.tar.gz
+    cd db-4.8.30.NC/build_unix/
+    ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=/home/$USER/db4/
+    make install
+    ```
+
+3. Clone github source
+    ```bash
+    git clone https://github.com/wizbl/wizbl.git
+    ```
+
+4. Build Source
+    ```bash
+    cd wizbl
+    cd depends
+    make
+    cd ..
+    ./autogen.sh
+    ./configure LDFLAGS="-L/home/$USER/db4/lib/ -L/usr/lib/" CPPFLAGS="-I/home/$USER/db4/include/"
+    make
+    make install DESTDIR={Absolute Path}
+    ```
+    *if Permission denied error occurs, we recommend to check that file has permission for execution*
 
 To Build
 ---------------------
@@ -81,11 +130,11 @@ install necessary parts of boost:
 
 BerkeleyDB is required for the wallet.
 
-**For Ubuntu only:** db4.8 packages are available [here](https://launchpad.net/~wizblcoin/+archive/wizblcoin).
+**For Ubuntu only:** db4.8 packages are available.
 You can add the repository and install using the following commands:
 
     sudo apt-get install software-properties-common
-    sudo add-apt-repository ppa:wizblcoin/wizblcoin
+    sudo add-apt-repository ppa:bitcoin/bitcoin
     sudo apt-get update
     sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
@@ -109,17 +158,6 @@ ZMQ dependencies (provides ZMQ API 4.x):
     configure: error: Wrong libsodium: version >= 1.0.13 required
 
 I tested it with version 1.0.15 (from the `depends` directory) at it works.
-
-    $ cd WIZBLCOIN
-    $ cd depends
-    $ make
-    $ cd ..
-    $ ./autogen.sh
-    $ ./configure --prefix=`pwd`/depends/x86_64-pc-linux-gnu
-    $ make
-    $ make install
-
-The command `make install` installs the executables in the `./depends/x86_64-pc-linux-gnu/bin/` directory.
 
 Dependencies for the GUI: Ubuntu & Debian
 -----------------------------------------
@@ -246,7 +284,7 @@ Hardening enables the following features:
 
     To test that you have built PIE executable, install scanelf, part of paxutils, and use:
 
-    	scanelf -e ./wizblcoin
+    	scanelf -e ./wizbl
 
     The output should contain:
 
@@ -261,7 +299,7 @@ Hardening enables the following features:
     executable without the non-executable stack protection.
 
     To verify that the stack is non-executable after compiling use:
-    `scanelf -e ./wizblcoin`
+    `scanelf -e ./wizbl`
 
     the output should contain:
 	STK/REL/PTL
@@ -294,7 +332,7 @@ This example lists the steps necessary to setup and build a command line only, n
 
     pacman -S git base-devel boost libevent python
     git clone https://github.com/wizbl/wizbl.git
-    cd wizblcoin/
+    cd wizbl/
     ./autogen.sh
     ./configure --disable-wallet --without-gui --without-miniupnpc
     make check

@@ -85,7 +85,7 @@ This means you cannot use a directory that located directly on the host Windows 
 
 Acquire the source in the usual way:
 
-    git clone http://git.wizbl.com:30000/wizbl_rndlab/wizbl.git
+    git clone https://github.com/wizbl/wizbl.git
 
 Once the source code is ready the build steps are below.
 
@@ -113,7 +113,7 @@ This means you cannot use a directory that located directly on the host Windows 
 
 Acquire the source in the usual way:
 
-    git clone http://git.wizbl.com:30000/wizbl_rndlab/wizbl.git
+    git clone https://github.com/wizbl/wizbl.git
 
 Then build using:
 
