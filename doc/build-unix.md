@@ -53,9 +53,6 @@ default install root path is $HOME
 4. Build Source
     ```bash
     cd wizbl
-    cd depends
-    make
-    cd ..
     ./autogen.sh
     ./configure LDFLAGS="-L/home/$USER/db4/lib/ -L/usr/lib/" CPPFLAGS="-I/home/$USER/db4/include/"
     make
