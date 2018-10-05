@@ -83,7 +83,8 @@ extern const char* CHECK_GENESIS_BLOCK_MERKLEROOT_HASH;
 
 #define GENESIS_BLOCK_TIME_STAMP "The Wizbl August 5, 2018"
 #define DNS_SEED_MAINNET vSeeds.emplace_back("mainnet01." TEXT_wizbl ".io", false); vSeeds.emplace_back("mainnet02." TEXT_wizbl ".io", false); vSeeds.emplace_back("mainnet03." TEXT_wizbl ".io", false);
-#define DNS_SEED_TESTNET vSeeds.emplace_back("testnet01." TEXT_wizbl ".io", false); vSeeds.emplace_back("testnet02." TEXT_wizbl ".io", false); vSeeds.emplace_back("testnet03." TEXT_wizbl ".io", false);
+#define DNS_SEED_TESTNET vSeeds.emplace_back("testnet01." TEXT_wizbl ".io", false); vSeeds.emplace_back("testnet02." TEXT_wizbl ".io", false); vSeeds.emplace_back("testnet03." TEXT_wizbl ".io", false); \
+                         vSeeds.emplace_back("testnet01." TEXT_wizbl ".com", false); vSeeds.emplace_back("testnet02." TEXT_wizbl ".com", false); 
 #define DEFAULT_SERVER_PORT 8624
 #define DEFAULT_RPC_PORT    8724
 #define MESSAGE_HEADER_START_CHARS_MAINNET  \
