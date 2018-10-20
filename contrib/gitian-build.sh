@@ -18,7 +18,7 @@ SIGNER=
 VERSION=
 commit=false
 url=https://github.com/wizbl/wizbl
-gsigsUrl=https://github.com/WIZBLCOIN/gitian.sigs
+gsigsUrl=https://github.com/wizbl/gitian.sigs
 detachUrl=https://github.com/wizbl/wizblcoincore-detached-sigs
 proc=2
 mem=2000
@@ -42,7 +42,7 @@ version		Version number, commit, or branch to build. If building a commit or bra
 Options:
 -c|--commit	Indicate that the version argument is for a commit or branch
 -u|--url	Specify the URL of the wizblcoincore repository. Default is https://github.com/wizbl/wizbl
--g|--gsigsUrl	Specify the URL of the gitian.sigs repository. Default is https://github.com/WIZBLCOIN/gitian.sigs
+-g|--gsigsUrl	Specify the URL of the gitian.sigs repository. Default is https://github.com/wizbl/gitian.sigs
 -d|--detachUrl	Specify the URL of the wizblcoincore-detached-sigs repository. Default is https://github.com/wizbl/wizblcoincore-detached-sigs
 -v|--verify 	Verify the Gitian build
 -b|--build	Do a Gitian build

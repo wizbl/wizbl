@@ -135,7 +135,7 @@ static bool rest_headers(HTTPRequest* req,
         return RESTERR(req, HTTP_BAD_REQUEST, "No header count specified. Use /rest/headers/<count>/<hash>.<ext> or /rest/headers/legacy/<count>/<hash>.<ext>.");
     }                           //use old rule if URI=/legacy/<COUNT>/<BLOCK-HASH>
     std::string headerCount,hashStr;
-    bool legacy_format = false;
+    //bool legacy_format = false;
     if (path.size() == 2) {
         headerCount = path[0];
         hashStr = path[1];
@@ -143,7 +143,7 @@ static bool rest_headers(HTTPRequest* req,
     else {
         headerCount = path[1];
         hashStr = path[2];
-        legacy_format = true;
+        //legacy_format = true;
     }
     long count = strtol(headerCount.c_str(), nullptr, 10);
     if (count < 1 || count > 2000)
@@ -216,12 +216,12 @@ static bool rest_block(HTTPRequest* req,
     const RetFormat rf = ParseDataFormat(param, strURIPart);
     std::vector<std::string> path;
     boost::split(path, param, boost::is_any_of("/"));
-    bool legacy_format = false;
+    //bool legacy_format = false;
     if (path.size() == 1) {          
         hashStr = path[0];
     }
     else {
-        legacy_format = true;  //use old rule if URI=/legacy/<BLOCK-HASH>
+        //legacy_format = true;  //use old rule if URI=/legacy/<BLOCK-HASH>
         hashStr = path[1];
     }
 

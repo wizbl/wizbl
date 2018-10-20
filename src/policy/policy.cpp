@@ -51,6 +51,12 @@ CAmount GetDustThreshold(const CTxOut& txout, const CFeeRate& dustRelayFeeIn)
     //return dustRelayFeeIn.GetFee(nSize);
 }
 
+bool IsAllowedDustAmount(const CAmount& amount)
+{
+    //최소 거래 단위보다 1만배 이상이면 단위보다 작은 값을 포함할수 있다.
+    return llabs(amount) > (10000 * static_cast<CAmount>(TRANSACTION_REQUEST_MINIMUM_UNIT));
+}
+
 bool IsDust(const CTxOut& txout, const CFeeRate& dustRelayFeeIn)
 {
     return (txout.nValue < GetDustThreshold(txout, dustRelayFeeIn));

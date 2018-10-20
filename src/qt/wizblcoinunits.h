@@ -96,6 +96,8 @@ public:
     static bool parse(int unit, const QString &value, CAmount *val_out, bool decimalDisplayDecrease = false);
     //! Gets title for amount column including current display unit if optionsModel reference available */
     static QString getAmountColumnTitle(int unit);
+    // 소수점 표시 감소
+    static int decimal_display_decrease();
     ///@}
 
     //! @name AbstractListModel implementation

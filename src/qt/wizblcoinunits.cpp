@@ -5,6 +5,7 @@
 #include "wizblcoinunits.h"
 
 #include "primitives/transaction.h"
+#include "../policy/policy.h"
 
 #include <QStringList>
 
@@ -80,7 +81,25 @@ int WizblcoinUnits::decimalsLength(int unit)
     }
 }
 
-#define DECIMAL_DISPLAY_DECREASE 4//DEFAULT_TRANSACTION_FEE_DENOMINATOR 180809 기준 '0' 4개
+//#define DECIMAL_DISPLAY_DECREASE 4//DEFAULT_TRANSACTION_FEE_DENOMINATOR 180809 기준 '0' 4개
+int WizblcoinUnits::decimal_display_decrease()
+{
+    static unsigned long static_Check_for_fee_change = 0;
+    static unsigned int uiRet = 0;
+    if (static_Check_for_fee_change != TRANSACTION_FEE_DENOMINATOR)
+    {
+        uiRet = 0;
+        static_Check_for_fee_change = TRANSACTION_FEE_DENOMINATOR;
+        unsigned int ui = 0;
+        unsigned long uidenominator = TRANSACTION_FEE_DENOMINATOR;
+        for (; 10 <= uidenominator; ui++)
+        {
+            uidenominator = uidenominator / 10;
+        }
+        uiRet = ui;
+    }
+    return uiRet;
+}
 
 QString WizblcoinUnits::format(int unit, const CAmount& nIn, bool fPlus, SeparatorStyle separators, bool decimalDisplayDecrease/* = false*/)
 {
@@ -93,9 +112,7 @@ QString WizblcoinUnits::format(int unit, const CAmount& nIn, bool fPlus, Separat
     const int num_decimals = decimalsLength(unit);
     qint64 n_abs = (n > 0 ? n : -n);
     qint64 quotient = n_abs / coin;
-    qint64 remainder = n_abs % coin;
     QString quotient_str = QString::number(quotient);
-    QString remainder_str = QString::number(remainder).rightJustified(num_decimals, '0');
 
     // Use SI-style thin space separators as these are locale independent and can't be
     // confused with the decimal marker.
@@ -110,11 +127,15 @@ QString WizblcoinUnits::format(int unit, const CAmount& nIn, bool fPlus, Separat
     else if (fPlus && n > 0)
         quotient_str.insert(0, '+');
 
-    if(decimalDisplayDecrease && remainder_str.size() > num_decimals - DECIMAL_DISPLAY_DECREASE)
-    {
-        remainder_str = remainder_str.mid(0, num_decimals - DECIMAL_DISPLAY_DECREASE);
+    if (num_decimals > 0) {
+        qint64 remainder = n_abs % coin;
+        QString remainder_str = QString::number(remainder).rightJustified(num_decimals, '0');
+        return quotient_str + QString(".") + (decimalDisplayDecrease && !IsAllowedDustAmount(nIn) && num_decimals >= decimal_display_decrease() ?
+            remainder_str.leftJustified(num_decimals - decimal_display_decrease(), '0', decimalDisplayDecrease) :
+            remainder_str);
+    } else {
+        return quotient_str;
     }
-    return quotient_str + QString(".") + remainder_str;
 }
 
 
@@ -144,6 +165,7 @@ bool WizblcoinUnits::parse(int unit, const QString &value, CAmount *val_out, boo
     if(!valid(unit) || value.isEmpty())
         return false; // Refuse to parse invalid unit or empty string
     const int num_decimals = decimalsLength(unit);
+    const int iNumberLengthLimit = 18;  // Longer numbers will exceed 63 bits
 
     // Ignore spaces and thin spaces when parsing
     QStringList parts = removeSpaces(value).split(".");
@@ -161,36 +183,36 @@ bool WizblcoinUnits::parse(int unit, const QString &value, CAmount *val_out, boo
     }
 
     bool ok = false;
-    QString str;
-    CAmount retvalue;
-    if (!decimalDisplayDecrease) {
-        if (decimals.size() > num_decimals) {
+    QString strValue;
+    {
+        if ((whole.size() > (iNumberLengthLimit - num_decimals)) || decimals.size() > num_decimals) {
             return false; // Exceeds max precision
         }
-        str = whole + decimals.leftJustified(num_decimals, '0');
+        strValue = whole + decimals.leftJustified(num_decimals, '0');
 
-        if (str.size() > 18) {
+        if (strValue.size() > iNumberLengthLimit) {
             return false; // Longer numbers will exceed 63 bits
         }
-        retvalue = str.toLongLong(&ok);
     }
-    else {
-        if (decimals.size() > num_decimals - DECIMAL_DISPLAY_DECREASE) {
-            return false; // Exceeds max precision
-        }
-        str = whole + decimals.leftJustified(num_decimals - DECIMAL_DISPLAY_DECREASE, '0');
 
-        if (str.size() > 18 - DECIMAL_DISPLAY_DECREASE) {
-            return false; // Longer numbers will exceed 63 bits
+    const CAmount retValue = strValue.toLongLong(&ok);
+
+    if (decimalDisplayDecrease && !IsAllowedDustAmount(retValue))
+    {
+        const int ddd = decimal_display_decrease();
+        const CAmount retValueDDD = retValue - (retValue % ddd);
+        if(retValue != retValueDDD)
+            return false;
+        if (2 == parts.size()) {
+            QStringList partsDDD = format(unit, retValueDDD, false, separatorNever, decimalDisplayDecrease).split(".");
+            if (2 == partsDDD.size() && parts[1].length() > partsDDD[1].length())
+                return false;
         }
-        for(int i = 0; i < DECIMAL_DISPLAY_DECREASE; i++)
-            str.append("0");
-        retvalue = str.toLongLong(&ok);
     }
 
     if(val_out)
     {
-        *val_out = retvalue;
+        *val_out = retValue;
     }
     return ok;
 }

@@ -55,7 +55,7 @@ AFLOUT=$PWD/outputs
 
 Example inputs are available from:
 
-- https://download.visucore.com/wizbl/wizbl_fuzzy_in.tar.xz
+- https://download.visucore.com/wizbl/wizblcoin_fuzzy_in.tar.xz
 - http://strateman.ninja/fuzzing.tar.xz
 
 Extract these (or other starting inputs) into the `inputs` directory before starting fuzzing.

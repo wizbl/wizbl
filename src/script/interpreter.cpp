@@ -1208,7 +1208,7 @@ uint256 SignatureHash(const CScript& scriptCode, const CTransaction& txTo, unsig
         nForkHashType |= forkid << 8;
 
     // force new tx with FORKID to use bip143 transaction digest algorithm
-    // see https://github.com/wizblcoin/bips/blob/master/bip-0143.mediawiki
+    // see https://github.com/wizbl/bips/blob/master/bip-0143.mediawiki
     if (sigversion == SIGVERSION_WITNESS_V0 || UsesForkId(nHashType)) {
         uint256 hashPrevouts;
         uint256 hashSequence;

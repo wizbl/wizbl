@@ -76,6 +76,11 @@ static const unsigned int STANDARD_LOCKTIME_VERIFY_FLAGS = LOCKTIME_VERIFY_SEQUE
 
 CAmount GetDustThreshold(const CTxOut& txout, const CFeeRate& dustRelayFee);
 
+/**
+ * 최소 거래 단위 이하의 값이, 허용되는 금액인지를 반환.
+ */
+bool IsAllowedDustAmount(const CAmount& amount);
+
 bool IsDust(const CTxOut& txout, const CFeeRate& dustRelayFee);
 
 bool IsStandard(const CScript& scriptPubKey, txnouttype& whichType, const bool witnessEnabled = false);

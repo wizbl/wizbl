@@ -732,9 +732,9 @@ UniValue getblockheader(const JSONRPCRequest& request)
     if (!request.params[1].isNull())
         fVerbose = request.params[1].get_bool();
 
-    bool legacy_format = false;
+    //bool legacy_format = false;
     if (request.params.size() == 3 && request.params[2].get_bool() == true) {
-        legacy_format = true;
+        //legacy_format = true;
     }
 
     if (mapBlockIndex.count(hash) == 0)
@@ -817,9 +817,9 @@ UniValue getblock(const JSONRPCRequest& request)
         else
             verbosity = request.params[1].get_bool() ? 1 : 0;
     }
-    bool legacy_format = false;
+    //bool legacy_format = false;
     if (request.params.size() == 3 && request.params[2].get_bool() == true) {
-        legacy_format = true;
+        //legacy_format = true;
     }
 
     if (mapBlockIndex.count(hash) == 0)

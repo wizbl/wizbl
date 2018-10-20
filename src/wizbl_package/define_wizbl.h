@@ -36,10 +36,14 @@ enum class eBlockRewardOption
 #define PUBKEY_ADDRESS_REGTEST 122 // r
 
 //default 거래 수수료율
-#define DEFAULT_TRANSACTION_FEE_DENOMINATOR 10000   //분모(숫자을 깔끔하게 하기 위해서.)(주의: qt gui 소수점 자릿수 계산에 10의 배수로 가정하고 구현하는 부분이 있음.)
+#define DEFAULT_TRANSACTION_FEE_DENOMINATOR 100000   //분모(숫자을 깔끔하게 하기 위해서.)(주의: qt gui 소수점 자릿수 계산에 10의 배수로 가정하고 구현하는 부분이 있음.)
 #define DEFAULT_TRANSACTION_FEE_NUMERATOR   13      //분자
 
 #define DEFAULT_TRANSACTION_REQUEST_MINIMUM_UNIT DEFAULT_TRANSACTION_FEE_DENOMINATOR
+
+extern unsigned long TRANSACTION_FEE_DENOMINATOR;
+extern unsigned long TRANSACTION_FEE_NUMERATOR;
+extern const unsigned long& TRANSACTION_REQUEST_MINIMUM_UNIT;
 
 //경고
 #define SHOW_OUT_OF_SYNC_WARNING_SECOND     24*60*60    //qt 지갑에서 마지막 블럭을 받고 24시간이 경과하면 경고가 표시됨.

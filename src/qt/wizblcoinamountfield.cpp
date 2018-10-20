@@ -7,6 +7,7 @@
 #include "wizblcoinunits.h"
 #include "guiconstants.h"
 #include "qvaluecombobox.h"
+#include "../policy/policy.h"
 
 #include <QApplication>
 #include <QAbstractSpinBox>
@@ -26,7 +27,7 @@ public:
     explicit AmountSpinBox(QWidget *parent):
         QAbstractSpinBox(parent),
         currentUnit(WizblcoinUnits::WBL),
-        singleStep(DEFAULT_TRANSACTION_FEE_DENOMINATOR) // satoshis
+        singleStep(TRANSACTION_FEE_DENOMINATOR) // satoshis
     {
         setAlignment(Qt::AlignRight);
 
@@ -39,6 +40,24 @@ public:
             return QValidator::Intermediate;
         bool valid = false;
         parse(text, &valid);
+        
+        // IsAllowedDustAmount 관련 입력 상태 동적 반영 목적의 코드
+        if(!valid) {
+            CAmount val = 0;
+            if(WizblcoinUnits::parse(currentUnit, text, &val, false) && !IsAllowedDustAmount(val)) {
+                QStringList parts = WizblcoinUnits::removeSpaces(text).split(".");
+                if (parts.size() == 2) {
+                    const int num_decimals = WizblcoinUnits::decimalsLength(currentUnit) - WizblcoinUnits::decimal_display_decrease();
+                    if (0 < num_decimals && parts[1].size() > num_decimals) {
+                        QString temp = parts[0] + "." + parts[1].leftJustified(num_decimals, '0', true);
+                        parse(temp, &valid);
+                        if (valid)
+                            text = temp;
+                    }
+                }
+            }
+        }
+
         /* Make sure we return Intermediate so that fixup() is called on defocus */
         return valid ? QValidator::Intermediate : QValidator::Invalid;
     }

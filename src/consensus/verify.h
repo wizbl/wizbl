@@ -43,6 +43,13 @@ private:
 public:
     void resetValidationInfo();
 
+    //regtest 예외 설정
+private:
+    bool m_bRegTest = false;
+public:
+    void setRegTest() { m_bRegTest = true; }
+    bool isRegTest() { return m_bRegTest; }
+
     //전자서명 공개키 등록
 public:
     uint16_t setPublicKeys(const std::string& strGenesisBlockSignaturePublicKeyBase64_44);

@@ -134,11 +134,11 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *_platformStyle, QWidget *p
     ui->checkBoxMinimumFee->setChecked(settings.value("fPayOnlyMinFee").toBool());
     minimizeFeeSection(settings.value("fFeeSectionMinimized").toBool());
 
+#if CLIENT_VERSION_END_USER_MODE
     ui->buttonChooseFee->hide();
     ui->pushButtonCoinControl->hide();
     coinControlFeatureChanged(false);
 
-#if CLIENT_VERSION_END_USER_MODE
     ui->frameCoinControl->setVisible(false);
     ui->frameFee->setVisible(false);
 #endif

@@ -28,9 +28,17 @@ void CBlockHeaderSignatureValidation::resetValidationInfo()
 
 uint16_t CBlockHeaderSignatureValidation::setPublicKeys(const std::string& strGenesisBlockSignaturePublicKeyBase64_44)
 {
-    assert(0 < strGenesisBlockSignaturePublicKeyBase64_44.size() && 0 == strGenesisBlockSignaturePublicKeyBase64_44.size() % PublicKeyBase64Length); //정상적인 공개키 입력을 확인다.
     const unsigned int uiPublicKeyCount = strGenesisBlockSignaturePublicKeyBase64_44.size() / PublicKeyBase64Length;
-    assert(4 <= uiPublicKeyCount); //최소의 키 숫자 보다 적은지 확인한다.
+    if(isRegTest())
+    {
+        assert(0 == strGenesisBlockSignaturePublicKeyBase64_44.size()); //공개키 입력을 누락한다.
+        assert(0 == uiPublicKeyCount); //키 숫자가 0 인지 확인한다.
+    }
+    else
+    {
+        assert(0 < strGenesisBlockSignaturePublicKeyBase64_44.size() && 0 == strGenesisBlockSignaturePublicKeyBase64_44.size() % PublicKeyBase64Length); //정상적인 공개키 입력을 확인다.
+        assert(4 <= uiPublicKeyCount); //최소의 키 숫자 보다 적은지 확인한다.
+    }
 
     LogPrintfd("uiPublicKeyCount [%d]", uiPublicKeyCount);
 
@@ -49,12 +57,17 @@ uint16_t CBlockHeaderSignatureValidation::setPublicKeys(const std::string& strGe
     if (4 <= m_iCountOfPublicKeysValid)
         m_iCountOfSignaturesRequiredToPassValidation = m_iCountOfPublicKeysValid / 3 * 2 + 1;
 
+    if(isRegTest())
+        m_iCountOfSignaturesRequiredToPassValidation = 0;
+    else
+        assert(3 <= m_iCountOfSignaturesRequiredToPassValidation);
+
     return m_iCountOfPublicKeysValid;
 }
 
 uint16_t CBlockHeaderSignatureValidation::getCountOfSignaturesRequiredToPassValidation() const
 {
-    return std::max((uint16_t)3, m_iCountOfSignaturesRequiredToPassValidation);
+    return m_iCountOfSignaturesRequiredToPassValidation;
 }
 uint16_t CBlockHeaderSignatureValidation::getPublicKeyCount() const
 {
@@ -83,7 +96,7 @@ bool CBlockHeaderSignatureValidation::verifyBlockHeader_(const CBlockHeader* pBl
     const uint256 hash = pBlockHeader->GetHash();
 
     uint16_t iPassCount = 0;
-    for (size_t i = 0; i < m_vPublicKey.size() && (((iPassCount + 1) * WIZBL_SIGN_BYTES) <= sig.size()); i++)
+    for (size_t i = 0; i < m_vPublicKey.size() && (((size_t)(iPassCount + 1) * WIZBL_SIGN_BYTES) <= sig.size()); i++)
     {
         uint16_t id = i + iGenerateID;
         if(id >= m_vPublicKey.size())

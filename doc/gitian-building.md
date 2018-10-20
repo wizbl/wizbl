@@ -315,7 +315,7 @@ Clone the git repositories for WIZBLCOIN and Gitian.
 ```bash
 git clone https://github.com/devrandom/gitian-builder.git
 git clone https://github.com/wizbl/wizbl.git
-git clone https://github.com/WIZBLCOIN/gitian.sigs.git
+git clone https://github.com/wizbl/gitian.sigs.git
 ```
 
 Setting up the Gitian image
@@ -480,5 +480,5 @@ Uploading signatures
 ---------------------
 
 After building and signing you can push your signatures (both the `.assert` and `.assert.sig` files) to the
-[WIZBLCOIN/gitian.sigs](https://github.com/WIZBLCOIN/gitian.sigs/) repository, or if that's not possible create a pull
+[WIZBLCOIN/gitian.sigs](https://github.com/wizbl/gitian.sigs/) repository, or if that's not possible create a pull
 request.

@@ -51,7 +51,7 @@ private:
 
 private :
     QNetworkAccessManager   networkAccessManager_;
-    qint32                  itemIndex_;         //개별 어떤걸 진행하고 있나?
+    uint32_t                itemIndex_;         //개별 어떤걸 진행하고 있나?
     QUrl                    itemUrl_;           //개별 진행하는 url
     QNetworkReply           *itemNetworkReply_; //개별 진행의 NetworkReply
     QFile                   *itemFile_;         //개별 진행의 파일 저장

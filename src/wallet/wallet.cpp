@@ -2676,9 +2676,10 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
     unsigned int nSubtractFeeFromAmount = 0;
     for (const auto& recipient : vecSend)
     {
-        if (0 != (recipient.nAmount % DEFAULT_TRANSACTION_REQUEST_MINIMUM_UNIT))
-        {
-            strFailReason = tfm::format("There is a value[%s] less than [Transaction request minimum unit %sWBL].", FormatMoney(recipient.nAmount), FormatMoney(DEFAULT_TRANSACTION_REQUEST_MINIMUM_UNIT));
+        if (!IsAllowedDustAmount(recipient.nAmount)
+            && 0 != (recipient.nAmount % TRANSACTION_REQUEST_MINIMUM_UNIT))
+        {//최소 단위의 10000 배수 보다 작은 경우, 나눈 몫이 0이 아니면 수수료 오류 반환.
+            strFailReason = tfm::format("There is a value[%s] less than [Transaction request minimum unit %sWBL].", FormatMoney(recipient.nAmount), FormatMoney(TRANSACTION_REQUEST_MINIMUM_UNIT));
             return false;
         }
         if (nValue < 0 || recipient.nAmount < 0)

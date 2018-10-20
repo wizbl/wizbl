@@ -67,8 +67,10 @@ QString util::processName(ulong processID)
     //return filePath.path();
     return "";
 #elif defined(Q_OS_LINUX)
+    return "";
 #elif defined(Q_OS_MACOS)
 #else
+    return "";
 #endif
     return "";
 }
@@ -223,8 +225,8 @@ QString util::getStyleSheet()
 "}"
 //버튼 예외
 "QPushButton#showRequestButton,QPushButton#removeRequestButton,QPushButton#selectFileButton,"
-"QPushButton#okButton,QPushButton#cancelButton,QPushButton#closeButton,"
-"QDialogButtonBox QAbstractButton"
+"QPushButton#okButton,QPushButton#cancelButton,QPushButton#closeButton,QPushButton#btnClearTrafficGraph"
+"QDialogButtonBox,QAbstractButton"
 "{"
 "    min-width : 80px;"
 "}"
@@ -234,6 +236,14 @@ QString util::getStyleSheet()
 "QPushButton#warningIcon"
 "{"
 "    min-width : 30px;"
+"}"
+"QPushButton#fontSmallerButton,QPushButton#fontBiggerButton,QPushButton#clearButton"
+"{"
+"    min-width : 24px;"
+"}"
+"QPushButton#promptIcon"
+"{"
+"    min-width : 16px;"
 "}"
 "QPushButton#labelWalletStatus,QPushButton#labelTransactionsStatus,QPushButton#warningIcon"
 "{"

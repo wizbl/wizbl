@@ -106,14 +106,14 @@ CFeeRate::CFeeRate(const CAmount& nFeePaid, size_t nBytes_)
 
 double CFeeRate::GetWizblFeeRate()
 {
-    static const double fFeeRate = (double)DEFAULT_TRANSACTION_FEE_NUMERATOR / DEFAULT_TRANSACTION_FEE_DENOMINATOR;
+    const double fFeeRate = (double)TRANSACTION_FEE_NUMERATOR / TRANSACTION_FEE_DENOMINATOR;
     return fFeeRate;
 }
 
 CAmount CFeeRate::GetFeePerAmount(const CAmount nAmount) const
 {
-    static const CAmount ntfDenominator = DEFAULT_TRANSACTION_FEE_DENOMINATOR;
-    static const CAmount ntfNumerator = DEFAULT_TRANSACTION_FEE_NUMERATOR;
+    const CAmount ntfDenominator = TRANSACTION_FEE_DENOMINATOR;
+    const CAmount ntfNumerator = TRANSACTION_FEE_NUMERATOR;
 
     //static const CAmount nOverflowCheck(std::numeric_limits<CAmount>::max() / ntfDenominator);
     const CAmount nSatoshis = (0 > nAmount) ? -nAmount : nAmount;
@@ -175,8 +175,7 @@ CAmount CFeeRate::GetDustThreshold()
     //static CAmount nDustThreshold = (1 > ((CAmount)dDustThreshold * GetWizblFeeRate())) ? dDustThreshold + 1 : dDustThreshold;
     //return nDustThreshold;
 
-    // 온전한 수수료 0.13% 적용 관련 수정.
-    return DEFAULT_TRANSACTION_REQUEST_MINIMUM_UNIT;
+    return 10000;//거래소등 업데이트 관리 안되는 곳을 위해서 과거 먼지값 유지
 }
 
 std::string CFeeRate::ToString() const

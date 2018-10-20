@@ -143,11 +143,11 @@ std::unique_ptr<CChainParams> CreateChainParams(const std::string& chain);
  */
 const CChainParams &Params();
 
-/**
- * Return the chain parameters with Wizblcoin address format. This is used for
- * address conversion.
- */
-const CChainParams &WizblcoinAddressFormatParams();
+///**
+// * Return the chain parameters with Wizblcoin address format. This is used for
+// * address conversion.
+// */
+//const CChainParams &WizblcoinAddressFormatParams();
 
 /**
  * Sets the params returned by Params() to those for the given BIP70 chain name.

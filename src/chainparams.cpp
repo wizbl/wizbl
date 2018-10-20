@@ -462,6 +462,7 @@ public:
         nEquihashKnew = K2;
 
 		LogPrintfd("RegTest");
+        consensus.SignatureValidation.setRegTest();
         consensus.SignatureValidation.setPublicKeys(GenesisBlockSignaturePublicKeyBase64_44_REGTEST);
         genesis = CreateGenesisBlock(1529852402, 1, consensus.SignatureValidation, GenesisBlockSignatureBase64_256_REGTEST);
 		consensus.hashGenesisBlock = genesis.GetHash(consensus);
@@ -504,18 +505,18 @@ public:
     
 };
 
-class WizblcoinAddressChainParam : public CMainParams
-{
-public:
-    WizblcoinAddressChainParam()
-    {
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
-    }
-};
+//class WizblcoinAddressChainParam : public CMainParams
+//{
+//public:
+//    WizblcoinAddressChainParam()
+//    {
+//        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);
+//        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
+//    }
+//};
 
 static std::unique_ptr<CChainParams> globalChainParams;
-static WizblcoinAddressChainParam chainParamsForAddressConversion;
+//static WizblcoinAddressChainParam chainParamsForAddressConversion;
 
 const CChainParams &Params()
 {
@@ -523,10 +524,10 @@ const CChainParams &Params()
     return *globalChainParams;
 }
 
-const CChainParams &WizblcoinAddressFormatParams()
-{
-    return chainParamsForAddressConversion;
-}
+//const CChainParams &WizblcoinAddressFormatParams()
+//{
+//    return chainParamsForAddressConversion;
+//}
 
 std::unique_ptr<CChainParams> CreateChainParams(const std::string& chain)
 {
@@ -541,6 +542,7 @@ std::unique_ptr<CChainParams> CreateChainParams(const std::string& chain)
 
 void SelectParams(const std::string& network)
 {
+    LogPrintfd("%s", network);
     SelectBaseParams(network);
     globalChainParams = CreateChainParams(network);
 }

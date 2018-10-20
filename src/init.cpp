@@ -521,7 +521,7 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    //const std::string URL_SOURCE_CODE = "<https://github.com/" TEXT_wizbl "/" TEXT_wizbl ">";
+    //const std::string URL_SOURCE_CODE = "<https://github.com/" TEXT_wizbl "/" TEXT_wizbl "coin>";
     //const std::string URL_WEBSITE = "<https://" TEXT_wizbl "coincore.org>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i"), 2018, COPYRIGHT_YEAR) + " ") + "\n" +

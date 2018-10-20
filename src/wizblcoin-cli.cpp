@@ -49,7 +49,7 @@ std::string HelpMessageCli()
     strUsage += HelpMessageOpt("-rpcclienttimeout=<n>", strprintf(_("Timeout in seconds during HTTP requests, or 0 for no timeout. (default: %d)"), DEFAULT_HTTP_CLIENT_TIMEOUT));
     strUsage += HelpMessageOpt("-stdin", _("Read extra arguments from standard input, one per line until EOF/Ctrl-D (recommended for sensitive information such as passphrases)"));
     strUsage += HelpMessageOpt("-rpcwallet=<walletname>", _("Send RPC for non-default wallet on RPC server (argument is wallet filename in " TEXT_wizbl "coind directory, required if " TEXT_wizbl "coind/-Qt runs with multiple wallets)"));
-    strUsage += HelpMessageOpt("-convertaddress=<" TEXT_wizbl "coin_address>", _("Convert a " TEXT_Wizbl "coin address into Wizblcoin Core address format."));
+    //strUsage += HelpMessageOpt("-convertaddress=<" TEXT_wizbl "coin_address>", _("Convert a " TEXT_Wizbl "coin address into Wizblcoin Core address format."));
 
     return strUsage;
 }
@@ -74,20 +74,20 @@ public:
 };
 
 
-static int ConvertAddressFormat()
-{
-    SelectParams(CBaseChainParams::MAIN);
-    const CChainParams& params = WizblcoinAddressFormatParams();
-    std::string old_address = gArgs.GetArg("-convertaddress", "");
-    CWizblcoinAddress addr(old_address);
-    if (!addr.IsValid(params)) {
-        fprintf(stderr, "Invalid " TEXT_Wizbl "coin address: %s\n", old_address.c_str());
-        return EXIT_FAILURE;
-    }
-    CWizblcoinAddress new_addr(addr.Get(params));
-    fprintf(stdout, "%s\n", new_addr.ToString().c_str());
-    return EXIT_SUCCESS;
-}
+//static int ConvertAddressFormat()
+//{
+//    SelectParams(CBaseChainParams::MAIN);
+//    const CChainParams& params = WizblcoinAddressFormatParams();
+//    std::string old_address = gArgs.GetArg("-convertaddress", "");
+//    CWizblcoinAddress addr(old_address);
+//    if (!addr.IsValid(params)) {
+//        fprintf(stderr, "Invalid " TEXT_Wizbl "coin address: %s\n", old_address.c_str());
+//        return EXIT_FAILURE;
+//    }
+//    CWizblcoinAddress new_addr(addr.Get(params));
+//    fprintf(stdout, "%s\n", new_addr.ToString().c_str());
+//    return EXIT_SUCCESS;
+//}
 
 //
 // This function returns either one of EXIT_ codes when it's expected to stop the process or
@@ -106,8 +106,8 @@ static int AppInitRPC(int argc, char* argv[])
                   "  " TEXT_wizbl "coin-cli [options] <command> [params]  " + strprintf(_("Send command to %s"), _(PACKAGE_NAME)) + "\n" +
                   "  " TEXT_wizbl "coin-cli [options] -named <command> [name=value] ... " + strprintf(_("Send command to %s (with named arguments)"), _(PACKAGE_NAME)) + "\n" +
                   "  " TEXT_wizbl "coin-cli [options] help                " + _("List commands") + "\n" +
-                  "  " TEXT_wizbl "coin-cli [options] help <command>      " + _("Get help for a command") + "\n"
-                  "  " TEXT_wizbl "coin-cli [options] -convertaddress=address " + _("Convert " TEXT_Wizbl "coin address to " TEXT_Wizbl "coin Core address")  + "\n";
+                  "  " TEXT_wizbl "coin-cli [options] help <command>      " + _("Get help for a command") + "\n";
+                  //"  " TEXT_wizbl "coin-cli [options] -convertaddress=address " + _("Convert bitcoin address to " TEXT_Wizbl "coin Core address")  + "\n";
 
             strUsage += "\n" + HelpMessageCli();
         }
@@ -141,15 +141,15 @@ static int AppInitRPC(int argc, char* argv[])
         fprintf(stderr, "Error: SSL mode for RPC (-rpcssl) is no longer supported.\n");
         return EXIT_FAILURE;
     }
-    if (gArgs.IsArgSet("-convertaddress")) {
-        std::string chain_name = ChainNameFromCommandLine();
-        if (chain_name != CBaseChainParams::MAIN) {
-            fprintf(stderr, "Error: Only the address format of mainnet can be converted. You selected: %s\n",
-                    chain_name.c_str());
-            return EXIT_FAILURE;
-        }
-        return ConvertAddressFormat();
-    }
+    //if (gArgs.IsArgSet("-convertaddress")) {
+    //    std::string chain_name = ChainNameFromCommandLine();
+    //    if (chain_name != CBaseChainParams::MAIN) {
+    //        fprintf(stderr, "Error: Only the address format of mainnet can be converted. You selected: %s\n",
+    //                chain_name.c_str());
+    //        return EXIT_FAILURE;
+    //    }
+    //    return ConvertAddressFormat();
+    //}
     return CONTINUE_EXECUTION;
 }
 
