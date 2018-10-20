@@ -3101,6 +3101,34 @@ extern UniValue importprunedfunds(const JSONRPCRequest& request);
 extern UniValue removeprunedfunds(const JSONRPCRequest& request);
 extern UniValue importmulti(const JSONRPCRequest& request);
 
+UniValue gettxamountfee(const JSONRPCRequest& request)
+{
+    CWallet* const pwallet = GetWalletForJSONRPCRequest(request);
+    if (!EnsureWalletIsAvailable(pwallet, request.fHelp)) {
+        return NullUniValue;
+    }
+
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "gettxamountfee\n"
+            "\nReturns a fee for the transaction amount.\n"
+            "\nResult:\n"
+            "{\n"
+            "  \"fee denominator\"         (numeric) the present fee denominator.\n"
+            "  \"fee numerator\"           (numeric) the present fee numerator.\n"
+            "}\n"
+            "\nExamples:\n"
+            + HelpExampleCli("gettxamountfee", "")
+            + HelpExampleRpc("gettxamountfee", ""));
+
+    LOCK2(cs_main, pwallet->cs_wallet);
+
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("fee denominator", std::to_string(TRANSACTION_FEE_DENOMINATOR)));
+    obj.push_back(Pair("fee numerator", std::to_string(TRANSACTION_FEE_NUMERATOR)));
+    return obj;
+}
+
 static const CRPCCommand commands[] =
 { //  category              name                        actor (function)           okSafeMode
     //  --------------------- ------------------------    -----------------------    ----------
